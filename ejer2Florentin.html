@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ca">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>Càlcul de velocitats mitjanes</title>
+	</head>
+	<body>    
+		<p><b><u>APLICACIÓ PEL CÀLCUL DE TEMPERATURAS MITJANES</u></b></p>
+		<b>a) Introudeix les dades de temperaturas en celsius:<br></b>
+		<table>
+			<tbody>
+				<tr>
+					<td>Mostra de Temperatura 1:</td>
+					<td><input type="text" name="temp[]" size="5" maxlength="6" value=0></td>
+					<td>Mostra de Temperatura 2:</td>
+					<td><input type="text" name="temp[]" size="5" maxlength="6" value=0></td>
+				</tr>
+				 <tr>
+					<td>Mostra de Temperatura 3:</td>
+					<td><input type="text" name="temp[]" size="5" maxlength="6" value=0></td>
+					<td>Mostra de Temperatura 4:</td>
+					<td><input type="text" name="temp[]" size="5" maxlength="6" value=0></td>
+				 </tr>
+				 <tr>
+					<td>Mostra de Temperatura 5:</td>
+					<td><input type="text" name="temp[]" size="5" maxlength="6" value=0></td>
+					<td>Mostra de Temperatura 6:</td>
+					<td><input type="text" name="temp[]" size="5" maxlength="6" value=0></td>
+				 </tr>
+				 <tr>
+					<td>Mostra de Temperatura 7:</td>
+					<td><input type="text" name="temp[]" size="5" maxlength="6" value=0></td>
+					<td>Mostra de Temperatura 8:</td>
+					<td><input type="text" name="temp[]" size="5" maxlength="6" value=0></td>
+				 </tr>
+			</tbody>
+		</table>	
+		<br>
+        <b>b) Escull les unitats de temperatura del resultat:</b><br>
+        <input name="ut[]" value="celsius" type="checkbox" checked>Graus Celsius (ºC)<br>
+        <input name="ut[]" value="fahrenheit" type="checkbox">Graus Fahrenheit (ºF)<br>
+        <input name="ut[]" value="kelvins" type="checkbox">Kelvins (K)<br>
+        <br>        
+        <button onclick='fCalcula()'>Calcula mitjanes</button>
+		<button onclick='fNeteja()'>Neteja dades</button>
+		<p><b>RESULTATS:</b></p>
+		<p id="resultats"></p>
+		<button onclick='fNetejaReinicia()'>Neteja resultats</button>
+		<script>
+			function fCalcula() {	
+				
+				var temp = document.getElementsByName("temp[]");
+				var ut = document.getElementsByName("ut[]");
+				var resultat = document.getElementById("resultats");
+				var suma = 0;
+				var media = 0;
+				var celsius = 0;
+				var fahrenheit = 0;
+				var kelvins = 0;
+				var resultat = "";
+				
+				for (var i = 0; i < temp.length; i++) {
+					suma += parseFloat(temp[i].value);
+				}
+				
+				media = suma / temp.length;
+				
+				for (var i = 0; i < ut.length; i++) {
+					if (ut[i].checked) {
+						if (ut[i].value == "celsius") {
+								celsius = media;
+                                resultat += "Celsius: " + celsius.toFixed(2) + "<br>";
+						}
+						if (ut[i].value == "fahrenheit") {
+								fahrenheit = (media * 9 / 5) + 32;;
+                                resultat += "Fahrenheit: " + fahrenheit.toFixed(2) + "<br>";
+						}
+						if (ut[i].value == "kelvins") {
+								kelvins = media + 273.15;
+                                resultat += "Kelvins: " + kelvins.toFixed(2) + "<br>";
+						}
+					}
+				}
+				document.getElementById("resultats").innerHTML = resultat;
+			}
+			
+			function fNeteja() {
+				var element_node;
+				var ut = document.getElementsByName("ut[]");
+				for(var i = 1; i < ut.length; i++) {
+					ut[i].checked = false;
+				}
+
+				var nodes_arr = document.getElementsByName('temp[]');
+				for (var i = 0; i < nodes_arr.length; i++) {
+					element_node = nodes_arr[i];
+					element_node.value = 0;
+				}
+			}
+						
+			function fNetejaReinicia() {	
+				document.getElementById("resultats").innerHTML = ' ';
+				
+			}
+		</script>   
+	</body>
+</html>
